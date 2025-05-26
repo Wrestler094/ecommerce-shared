@@ -50,6 +50,11 @@ func (l *slogLogger) Error(msg string, args ...any) {
 	l.logger.Error(msg, args...)
 }
 
+func (l *slogLogger) Fatal(msg string, args ...any) {
+	l.logger.Error(msg, args...)
+	os.Exit(1)
+}
+
 func (l *slogLogger) With(args ...any) Logger {
 	return &slogLogger{
 		logger: l.logger.With(args...),
