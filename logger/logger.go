@@ -1,0 +1,73 @@
+package logger
+
+import (
+	"errors"
+	"log/slog"
+	"os"
+	"strings"
+)
+
+type Logger interface {
+	Debug(msg string, args ...any)
+	Info(msg string, args ...any)
+	Warn(msg string, args ...any)
+	Error(msg string, args ...any)
+	With(args ...any) Logger
+}
+
+type slogLogger struct {
+	logger *slog.Logger
+}
+
+func NewLogger(level string) (Logger, error) {
+	lvl, err := parseLevel(level)
+	if err != nil {
+		return nil, err
+	}
+
+	handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+		Level: lvl,
+	})
+
+	return &slogLogger{
+		logger: slog.New(handler),
+	}, nil
+}
+
+func (l *slogLogger) Debug(msg string, args ...any) {
+	l.logger.Debug(msg, args...)
+}
+
+func (l *slogLogger) Info(msg string, args ...any) {
+	l.logger.Info(msg, args...)
+}
+
+func (l *slogLogger) Warn(msg string, args ...any) {
+	l.logger.Warn(msg, args...)
+}
+
+func (l *slogLogger) Error(msg string, args ...any) {
+	l.logger.Error(msg, args...)
+}
+
+func (l *slogLogger) With(args ...any) Logger {
+	return &slogLogger{
+		logger: l.logger.With(args...),
+	}
+}
+
+// parseLevel преобразует строку в slog.Level
+func parseLevel(s string) (slog.Level, error) {
+	switch strings.ToLower(s) {
+	case "debug":
+		return slog.LevelDebug, nil
+	case "info":
+		return slog.LevelInfo, nil
+	case "warn", "warning":
+		return slog.LevelWarn, nil
+	case "error":
+		return slog.LevelError, nil
+	default:
+		return 0, errors.New("invalid log level: " + s)
+	}
+}
