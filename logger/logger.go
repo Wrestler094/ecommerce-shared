@@ -12,6 +12,7 @@ type Logger interface {
 	Info(msg string, args ...any)
 	Warn(msg string, args ...any)
 	Error(msg string, args ...any)
+	Fatal(msg string, args ...any)
 	With(args ...any) Logger
 }
 
@@ -61,7 +62,7 @@ func (l *slogLogger) With(args ...any) Logger {
 	}
 }
 
-// parseLevel преобразует строку в slog.Level
+// parseLevel converts a string into a slog.Level.
 func parseLevel(s string) (slog.Level, error) {
 	switch strings.ToLower(s) {
 	case "debug":
