@@ -1,4 +1,4 @@
-package logger
+package logging
 
 import (
 	"errors"
@@ -6,15 +6,6 @@ import (
 	"os"
 	"strings"
 )
-
-type Logger interface {
-	Debug(msg string, args ...any)
-	Info(msg string, args ...any)
-	Warn(msg string, args ...any)
-	Error(msg string, args ...any)
-	Fatal(msg string, args ...any)
-	With(args ...any) Logger
-}
 
 type slogLogger struct {
 	logger *slog.Logger
@@ -26,7 +17,7 @@ func NewLogger(level string) (Logger, error) {
 		return nil, err
 	}
 
-	handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
+	handler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 		Level: lvl,
 	})
 

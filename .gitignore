@@ -1,0 +1,45 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go build cache and binary output
+/build/
+/bin/
+/dist/
+*.o
+*.a
+
+# Editor/IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Dependency management
+Gopkg.lock
+Gopkg.toml
+
+# Testing
+coverage.out
+
+# Migrations artifacts (keep *.sql files)
+*.lock
+
+# Environment artifacts
+.env
+.env.*
+*.local
