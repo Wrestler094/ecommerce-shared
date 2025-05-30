@@ -1,12 +1,12 @@
 package validation
 
-// FieldError — структура для описания ошибок валидации.
-type FieldError struct {
-	Field   string
-	Message string
+// FieldError — контракт ошибки валидации
+type FieldError interface {
+	Field() string
+	Message() string
 }
 
-// Validator — интерфейс для адаптируемых валидаторов.
+// Validator — контракт валидации любых структур
 type Validator interface {
-	Validate(i any) []FieldError
+	Validate(any) []FieldError
 }

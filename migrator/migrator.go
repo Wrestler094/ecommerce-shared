@@ -11,6 +11,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// Run выполняет миграции для PostgreSQL, используя строку подключения и путь до миграций.
 func Run(databaseURL string, migrationsPath string) error {
 	db, err := sql.Open("postgres", databaseURL)
 	if err != nil {

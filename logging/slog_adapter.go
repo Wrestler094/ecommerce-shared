@@ -7,10 +7,12 @@ import (
 	"strings"
 )
 
+// slogLogger — адаптер slog.Logger, реализующий интерфейс Logger.
 type slogLogger struct {
 	logger *slog.Logger
 }
 
+// NewLogger создает новый Logger с указанным уровнем логирования (debug, info, warn, error).
 func NewLogger(level string) (Logger, error) {
 	lvl, err := parseLevel(level)
 	if err != nil {
